@@ -1,6 +1,7 @@
 import css from "./NoteList.module.css";
 
 import type { NoteResponse } from "../../types/note";
+import Link from "next/link";
 
 interface NotesProps {
   notes: NoteResponse[];
@@ -25,6 +26,7 @@ export default function NoteList({ notes, onDelete, setPage }: NotesProps) {
               <p className={css.content}>{note.content}</p>
               <div className={css.footer}>
                 <span className={css.tag}>{note.tag}</span>
+                <Link href={`/notes/${note.id}`} className={css.link}>View details</Link>
                 <button
                   className={css.button}
                   onClick={() => handleDelete(note.id)}

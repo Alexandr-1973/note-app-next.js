@@ -1,4 +1,4 @@
-interface NoteTag {
+export interface NoteTag {
   tag: string | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 }
 
