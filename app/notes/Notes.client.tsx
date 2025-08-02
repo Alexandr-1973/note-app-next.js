@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import ReactPaginate from "react-paginate";
 import type { Note } from "../../types/note";
-import { createNote, deleteNote, fetchNotes } from "@/lib/api";
+import { createNote, fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
@@ -29,9 +29,7 @@ export default function NoteClient({ startData }: NoteClientProps) {
 
   const queryClient = useQueryClient();
 
-  const { data,
-	//  isLoading, isError, error,
-	  isSuccess } = useQuery({
+  const { data, isLoading, isError, error, isSuccess } = useQuery({
     queryKey: ["notes", query, page],
     queryFn: () => fetchNotes(query, page),
     placeholderData: keepPreviousData,
@@ -41,13 +39,6 @@ export default function NoteClient({ startData }: NoteClientProps) {
 
   const addNoteMutation = useMutation({
     mutationFn: (note: Note) => createNote(note),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-    },
-  });
-
-  const deleteNoteMutation = useMutation({
-    mutationFn: (id: string) => deleteNote(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
@@ -64,10 +55,6 @@ export default function NoteClient({ startData }: NoteClientProps) {
   const onSubmitNote = (note: Note) => {
     addNoteMutation.mutate(note);
     closeModal();
-  };
-
-  const onDelete = (id: string) => {
-    deleteNoteMutation.mutate(id);
   };
 
   return (
@@ -101,13 +88,9 @@ export default function NoteClient({ startData }: NoteClientProps) {
           </Modal>
         )}
       </header>
-      {/* {isLoading && <span>Loading...</span>}
-      {isError && <span>Error: {error.message}</span>} */}
-      {isSuccess && data && (
-        <NoteList notes={data.notes} onDelete={onDelete} setPage={setPage} />
-      )}
+      {isLoading && <span>Loading...</span>}
+      {isError && <span>Error: {error.message}</span>}
+      {isSuccess && data && <NoteList notes={data.notes} />}
     </div>
   );
 }
-
-
