@@ -1,17 +1,11 @@
 "use client";
 
 import css from "./Notes.client.module.css";
-import {
-  keepPreviousData,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import ReactPaginate from "react-paginate";
-import type { Note } from "../../types/note";
-import { createNote, fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
@@ -27,21 +21,12 @@ export default function NoteClient({ startData }: NoteClientProps) {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const queryClient = useQueryClient();
-
   const { data, isLoading, isError, error, isSuccess } = useQuery({
     queryKey: ["notes", query, page],
     queryFn: () => fetchNotes(query, page),
     placeholderData: keepPreviousData,
     initialData: startData,
     refetchOnMount: false,
-  });
-
-  const addNoteMutation = useMutation({
-    mutationFn: (note: Note) => createNote(note),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-    },
   });
 
   const handleQueryChange = useDebouncedCallback((newQuery: string) => {
@@ -51,11 +36,6 @@ export default function NoteClient({ startData }: NoteClientProps) {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const onSubmitNote = (note: Note) => {
-    addNoteMutation.mutate(note);
-    closeModal();
-  };
 
   return (
     <div className={css.app}>
@@ -80,11 +60,7 @@ export default function NoteClient({ startData }: NoteClientProps) {
         </button>
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <NoteForm
-              onClose={closeModal}
-              onSubmitNote={onSubmitNote}
-              setPage={setPage}
-            />
+            <NoteForm onClose={closeModal} />
           </Modal>
         )}
       </header>
