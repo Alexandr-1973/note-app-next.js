@@ -14,7 +14,7 @@ export type NoteByIdResponse = {
   content: string;
   createdAt: string;
   id: string;
-  tag: NoteTag;
+  tag: string;
   title: string;
   updatedAt: string;
 };
@@ -70,5 +70,7 @@ export async function deleteNote(id: string) {
 
 export async function fetchNoteById(id: string) {
   const response = await axios.get<NoteByIdResponse>(`${id}`, auth);
+  console.log(response.data);
+  
   return response.data;
 }

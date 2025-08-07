@@ -8,7 +8,7 @@ import ReactPaginate from "react-paginate";
 import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/CreateNoteModal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import type { GetResponse } from "@/lib/api";
 
