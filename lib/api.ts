@@ -19,6 +19,13 @@ export type NoteByIdResponse = {
   updatedAt: string;
 };
 
+interface Params {
+  search: string;
+  page: number;
+  tag?: string;
+  perPage: number;
+}
+
 axios.defaults.baseURL = "https://notehub-public.goit.study/api/notes";
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
@@ -28,12 +35,23 @@ const auth = {
   },
 };
 
-export async function fetchNotes(query: string = "", page: number = 1) {
-  const response = await axios.get<GetResponse>("?perPage=12", {
-    params: {
-      page,
-      search: query,
-    },
+export async function fetchNotes(
+  query: string = "",
+  page: number = 1,
+  tag: string,
+) {
+  const params: Params = {
+    page,
+    search: query,
+    perPage: 12,
+  };
+
+  if (tag !== "All") {
+    params.tag = tag;
+  }
+
+  const response = await axios.get<GetResponse>("", {
+    params,
     ...auth,
   });
 

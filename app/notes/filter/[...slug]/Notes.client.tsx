@@ -14,16 +14,18 @@ import type { GetResponse } from "@/lib/api";
 
 type NoteClientProps = {
   startData: GetResponse;
+  category: string;
 };
 
-export default function NoteClient({ startData }: NoteClientProps) {
+export default function NoteClient({ startData, category }: NoteClientProps) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError, error, isSuccess } = useQuery({
-    queryKey: ["notes", query, page],
-    queryFn: () => fetchNotes(query, page),
+    queryKey: ["notes", query, page, category],
+    queryFn: () => fetchNotes(query, page, category),
     placeholderData: keepPreviousData,
     initialData: startData,
     refetchOnMount: false,
