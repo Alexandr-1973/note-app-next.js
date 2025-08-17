@@ -8,8 +8,7 @@ import ReactPaginate from "react-paginate";
 import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
-// import Modal from "@/components/CreateNoteModal/Modal";
-// import NoteForm from "@/components/NoteForm/NoteForm";
+
 import type { GetResponse } from "@/lib/api";
 import Link from "next/link";
 
@@ -22,23 +21,18 @@ export default function NoteClient({ startData, category }: NoteClientProps) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const { data, isLoading, isError, error, isSuccess } = useQuery({
     queryKey: ["notes", query, page, category],
     queryFn: () => fetchNotes(query, page, category),
     placeholderData: keepPreviousData,
     initialData: startData,
-    refetchOnMount: false,
+    // refetchOnMount: false,
   });
 
   const handleQueryChange = useDebouncedCallback((newQuery: string) => {
     setQuery(newQuery);
     setPage(1);
   }, 300);
-
-  // const openModal = () => setIsModalOpen(true);
-  // const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={css.app}>
@@ -58,17 +52,9 @@ export default function NoteClient({ startData, category }: NoteClientProps) {
           />
         )}
 
-        <Link href="/notes/action/create" className={css.button} >
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
         </Link>
-        {/* <button className={css.button} onClick={openModal}>
-          Create note +
-        </button> */}
-        {/* {isModalOpen && (
-          <Modal onClose={closeModal}>
-            <NoteForm onClose={closeModal} />
-          </Modal>
-        )} */}
       </header>
       {isLoading && <span>Loading...</span>}
       {isError && <span>Error: {error.message}</span>}
