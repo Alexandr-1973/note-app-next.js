@@ -8,9 +8,10 @@ import ReactPaginate from "react-paginate";
 import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/CreateNoteModal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
+// import Modal from "@/components/CreateNoteModal/Modal";
+// import NoteForm from "@/components/NoteForm/NoteForm";
 import type { GetResponse } from "@/lib/api";
+import Link from "next/link";
 
 type NoteClientProps = {
   startData: GetResponse;
@@ -36,8 +37,8 @@ export default function NoteClient({ startData, category }: NoteClientProps) {
     setPage(1);
   }, 300);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={css.app}>
@@ -57,14 +58,17 @@ export default function NoteClient({ startData, category }: NoteClientProps) {
           />
         )}
 
-        <button className={css.button} onClick={openModal}>
+        <Link href="/notes/action/create" className={css.button} >
           Create note +
-        </button>
-        {isModalOpen && (
+        </Link>
+        {/* <button className={css.button} onClick={openModal}>
+          Create note +
+        </button> */}
+        {/* {isModalOpen && (
           <Modal onClose={closeModal}>
             <NoteForm onClose={closeModal} />
           </Modal>
-        )}
+        )} */}
       </header>
       {isLoading && <span>Loading...</span>}
       {isError && <span>Error: {error.message}</span>}
