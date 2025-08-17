@@ -17,7 +17,6 @@ export default function NoteForm() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    
     setDraft({
       ...draft,
       [event.target.name]: event.target.value,
@@ -28,14 +27,14 @@ export default function NoteForm() {
     mutationFn: (note: Note) => createNote(note),
     onSuccess: () => {
       clearDraft();
-      router.push(`/notes/filter/All`);
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+      router.push(`/notes/filter/All`);
     },
   });
 
   const handleSubmit = (formData: FormData) => {
     const values = Object.fromEntries(formData) as unknown as Note;
-    console.log(values);
+
     addNoteMutation.mutate(values);
   };
 
