@@ -26,7 +26,7 @@ export default function NoteClient({ startData, category }: NoteClientProps) {
     queryFn: () => fetchNotes(query, page, category),
     placeholderData: keepPreviousData,
     initialData: startData,
-    // refetchOnMount: false,
+    refetchOnMount: false,
   });
 
   const handleQueryChange = useDebouncedCallback((newQuery: string) => {

@@ -55,6 +55,9 @@ export async function fetchNotes(
     ...auth,
   });
 
+  // console.log(response.data);
+  
+
   return response.data;
 }
 
@@ -70,7 +73,7 @@ export async function deleteNote(id: string) {
 
 export async function fetchNoteById(id: string) {
   const response = await axios.get<NoteByIdResponse>(`${id}`, auth);
-  console.log(response.data);
+  // console.log(response.data);
   
   return response.data;
 }
