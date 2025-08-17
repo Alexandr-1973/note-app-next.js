@@ -27,7 +27,7 @@ export default function NoteForm() {
     mutationFn: (note: Note) => createNote(note),
     onSuccess: () => {
       clearDraft();
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      // queryClient.invalidateQueries({ queryKey: ["notes"] });
       router.push(`/notes/filter/All`);
     },
   });
