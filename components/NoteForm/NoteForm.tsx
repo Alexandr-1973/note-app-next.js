@@ -29,6 +29,7 @@ export default function NoteForm() {
       clearDraft();
       // queryClient.invalidateQueries({ queryKey: ["notes"] });
       router.push(`/notes/filter/All`);
+      router.refresh();
     },
   });
 
