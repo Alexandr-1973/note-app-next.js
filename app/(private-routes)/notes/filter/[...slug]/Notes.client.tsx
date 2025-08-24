@@ -5,12 +5,10 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import ReactPaginate from "react-paginate";
-import { fetchNotes } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
-
-import type { GetResponse } from "@/lib/api";
 import Link from "next/link";
+import { fetchNotes, GetResponse } from "@/lib/api/clientApi";
 
 type NoteClientProps = {
   startData: GetResponse;

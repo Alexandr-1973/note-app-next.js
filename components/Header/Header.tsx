@@ -1,6 +1,7 @@
 import Link from "next/link";
 import css from "./Header.module.css";
 import TagsMenu from "../TagsMenu/TagsMenu";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
 
 export default function Header() {
   return (
@@ -16,9 +17,18 @@ export default function Header() {
             </Link>
           </li>
           <li className={css.navigationItem}>
-            <TagsMenu categories={["All", "Todo", "Work", "Personal", "Meeting", "Shopping"]}/>
-            {/* <Link href="/notes">Notes</Link> */}
+            <TagsMenu
+              categories={[
+                "All",
+                "Todo",
+                "Work",
+                "Personal",
+                "Meeting",
+                "Shopping",
+              ]}
+            />
           </li>
+          <AuthNavigation />
         </ul>
       </nav>
     </header>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import css from "./page.module.css"
+import css from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found",
@@ -23,7 +23,6 @@ export const metadata: Metadata = {
     canonical: "test-next-js-silk-two.vercel.app/not-found",
   },
 };
-
 
 export default function NotFound() {
   return (

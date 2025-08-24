@@ -3,9 +3,9 @@
 import css from "./NoteForm.module.css";
 import type { Note } from "../../types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createNote, GetResponse } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useNoteDraftStore } from "@/lib/store/noteStore";
+import { createNote, GetResponse } from "@/lib/api/clientApi";
 
 export default function NoteForm() {
   const { draft, setDraft, clearDraft } = useNoteDraftStore();
@@ -33,7 +33,6 @@ export default function NoteForm() {
         notes: old?.notes ? [note, ...old.notes] : [note],
       }));
       router.push(`/notes/filter/All`);
-     
     },
   });
 
