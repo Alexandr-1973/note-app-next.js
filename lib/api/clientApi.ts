@@ -103,7 +103,8 @@ export const logout = async (): Promise<void> => {
 
 export type PatchRequest = {
   email: string;
-  userName: string;
+  userName?: string;
+  avatar_file?: File;
 };
 
 export type UserPatch = {
@@ -112,7 +113,17 @@ export type UserPatch = {
   avatar: string;
 };
 
-export const patchUser = async (data: PatchRequest) => {
-  const res = await nextServer.patch<UserPatch>("/users/me", data);
+// export const patchUser = async (data: PatchRequest) => {
+//   const res = await nextServer.patch<UserPatch>("/users/me", data);
+//   return res.data;
+// };
+
+
+export const patchUser = async (formData: FormData) => {
+  const res = await nextServer.patch<UserPatch>("/users/me", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };

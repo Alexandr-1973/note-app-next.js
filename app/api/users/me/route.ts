@@ -32,11 +32,18 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const cookieStore = await cookies();
-    const body = await request.json();
+    const formData = await request.formData();
+    // const body = await request.json();
+
+    const body = new FormData();
+    formData.forEach((value, key) => {
+      body.append(key, value);
+    });
 
     const res = await api.patch('/users/me', body, {
       headers: {
         Cookie: cookieStore.toString(),
+        "Content-Type": "multipart/form-data",
       },
     });
     return NextResponse.json(res.data, { status: res.status });

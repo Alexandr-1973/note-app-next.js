@@ -5,18 +5,34 @@ import css from "./EditProfilePage.module.css";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { PatchRequest, patchUser } from "@/lib/api/clientApi";
+import { useState } from "react";
 
 export default function ProfileEdit() {
   const router = useRouter();
 
   const { user, setUser } = useAuthStore();
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file); // создаём временный URL
+      setPreview(url);
+      setFileName(file.name);
+    }
+  };
 
   const handleSubmit = async (formData: FormData) => {
-    const formValues = Object.fromEntries(formData);
-    if (user) {
-      formValues.email = user.email;
+    // const formValues = Object.fromEntries(formData);
+    // console.log(formValues);
 
-      const res = await patchUser(formValues as PatchRequest);
+    if (user) {
+      formData.append("email", user.email);
+      const res = await patchUser(formData);
+      // formValues.email = user.email;
+
+      // const res = await patchUser(formValues as PatchRequest);
 
       if (res) {
         setUser(res);
@@ -32,7 +48,7 @@ export default function ProfileEdit() {
 
         {user && (
           <Image
-            src={user.avatar}
+            src={preview ? preview : user.avatar}
             alt="User Avatar"
             width={120}
             height={120}
@@ -42,6 +58,18 @@ export default function ProfileEdit() {
 
         <form className={css.profileInfo} action={handleSubmit}>
           <div className={css.usernameWrapper}>
+            <h1 className={css.fileName}>{fileName}</h1>
+            <label className={css.fileUpload}>
+              <span>Choose file to change avatar</span>
+              <input
+                id="avatarFile"
+                type="file"
+                name="avatar_file"
+                className={css.hiddenInput}
+                onChange={handleFileChange}
+                // defaultValue={user?.username}
+              />
+            </label>
             <label htmlFor="username">Username:</label>
             <input
               id="username"
@@ -52,7 +80,7 @@ export default function ProfileEdit() {
             />
           </div>
 
-          <p>Email: user_email@example.com</p>
+          <p>Email: {user?.email}</p>
 
           <div className={css.actions}>
             <button type="submit" className={css.saveButton}>

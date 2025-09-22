@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
 	  remotePatterns: [
-	      { protocol: 'https', hostname: 'ac.goit.global' }
+	      { protocol: 'https', hostname: 'ac.goit.global' },
+		  { protocol: 'https', hostname: 'www.gravatar.com' }
 	    ]
 	}
 };
