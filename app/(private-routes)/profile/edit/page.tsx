@@ -4,7 +4,7 @@ import Image from "next/image";
 import css from "./EditProfilePage.module.css";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
-import { PatchRequest, patchUser } from "@/lib/api/clientApi";
+import { patchUser } from "@/lib/api/clientApi";
 import { useState } from "react";
 
 export default function ProfileEdit() {
@@ -17,7 +17,13 @@ export default function ProfileEdit() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file); // создаём временный URL
+      if (!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024) {
+        e.target.value = "";
+        setPreview(null);
+        setFileName("");
+        return;
+      }
+      const url = URL.createObjectURL(file);
       setPreview(url);
       setFileName(file.name);
     }
@@ -25,13 +31,11 @@ export default function ProfileEdit() {
 
   const handleSubmit = async (formData: FormData) => {
     // const formValues = Object.fromEntries(formData);
-    // console.log(formValues);
 
     if (user) {
       formData.append("email", user.email);
       const res = await patchUser(formData);
       // formValues.email = user.email;
-
       // const res = await patchUser(formValues as PatchRequest);
 
       if (res) {
@@ -53,11 +57,15 @@ export default function ProfileEdit() {
             width={120}
             height={120}
             className={css.avatar}
+            unoptimized
           />
         )}
 
         <form className={css.profileInfo} action={handleSubmit}>
           <div className={css.usernameWrapper}>
+            <h1 className={css.fileName}>
+              {fileName ? "" : "Only for image file under 2MB"}
+            </h1>
             <h1 className={css.fileName}>{fileName}</h1>
             <label className={css.fileUpload}>
               <span>Choose file to change avatar</span>
@@ -67,7 +75,6 @@ export default function ProfileEdit() {
                 name="avatar_file"
                 className={css.hiddenInput}
                 onChange={handleFileChange}
-                // defaultValue={user?.username}
               />
             </label>
             <label htmlFor="username">Username:</label>

@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   images: {
 	  remotePatterns: [
 	      { protocol: 'https', hostname: 'ac.goit.global' },
-		  { protocol: 'https', hostname: 'www.gravatar.com' }
+		  { protocol: 'https', hostname: 'www.gravatar.com' },
+		  { protocol: 'https', hostname: 'res.cloudinary.com' }
 	    ]
 	}
 };

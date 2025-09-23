@@ -66,8 +66,6 @@ export type RegisterRequest = {
   password: string;
 };
 
-
-
 export const register = async (data: RegisterRequest) => {
   const res = await nextServer.post<User>("/auth/register", data);
   return res.data;
@@ -101,11 +99,11 @@ export const logout = async (): Promise<void> => {
   await nextServer.post("/auth/logout");
 };
 
-export type PatchRequest = {
-  email: string;
-  userName?: string;
-  avatar_file?: File;
-};
+// export type PatchRequest = {
+//   email: string;
+//   userName?: string;
+//   avatar_file?: File;
+// };
 
 export type UserPatch = {
   email: string;
@@ -117,7 +115,6 @@ export type UserPatch = {
 //   const res = await nextServer.patch<UserPatch>("/users/me", data);
 //   return res.data;
 // };
-
 
 export const patchUser = async (formData: FormData) => {
   const res = await nextServer.patch<UserPatch>("/users/me", formData, {
