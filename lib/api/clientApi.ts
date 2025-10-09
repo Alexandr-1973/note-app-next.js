@@ -124,3 +124,8 @@ export const patchUser = async (formData: FormData) => {
   });
   return res.data;
 };
+
+export const refreshToken = async () => {
+  const res = await nextServer.get<CheckSessionRequest>("/auth/refresh?silent=1");
+  return res.data.success;
+};
