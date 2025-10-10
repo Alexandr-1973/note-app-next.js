@@ -15,11 +15,11 @@ interface deleteResponse {
 
 export type NoteByIdResponse = {
   content: string;
-  createdAt: string;
+  created_at: string;
   id: string;
   tag: string;
   title: string;
-  updatedAt: string;
+  updated_at: string;
 };
 
 interface Params {
@@ -83,6 +83,9 @@ export async function fetchNoteById(id: string) {
     `notes/${id}`,
     await getAuth()
   );
+
+  console.log(response.data.created_at);
+  
   return response.data;
 }
 

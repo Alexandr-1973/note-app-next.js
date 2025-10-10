@@ -36,7 +36,7 @@ export default function NotePreviewClient() {
           </div>
           <p className={css.tag}>{note.tag}</p>
           <p className={css.content}>{note.content}</p>
-          <p className={css.date}>{note.createdAt}</p>
+          <p className={css.date}>{note.created_at}</p>
         </div>
       </div>
     </Modal>

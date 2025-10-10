@@ -1,6 +1,7 @@
 import type { Note, NoteResponse } from "@/types/note";
 import { nextServer } from "./api";
 import { User } from "@/types/user";
+import { log } from "util";
 
 export interface GetResponse {
   notes: NoteResponse[];
@@ -13,11 +14,11 @@ interface deleteResponse {
 
 export type NoteByIdResponse = {
   content: string;
-  createdAt: string;
+  created_at: string;
   id: string;
   tag: string;
   title: string;
-  updatedAt: string;
+  updated_at: string;
 };
 
 interface Params {
@@ -58,6 +59,9 @@ export async function deleteNote(id: string) {
 
 export async function fetchNoteById(id: string) {
   const response = await nextServer.get<NoteByIdResponse>(`notes/${id}`);
+
+  console.log(response.data);
+  
   return response.data;
 }
 
@@ -125,7 +129,3 @@ export const patchUser = async (formData: FormData) => {
   return res.data;
 };
 
-export const refreshToken = async () => {
-  const res = await nextServer.get<CheckSessionRequest>("/auth/refresh?silent=1");
-  return res.data.success;
-};

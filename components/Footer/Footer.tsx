@@ -4,14 +4,10 @@ export default function Footer() {
   return (
     <footer className={css.footer}>
       <div className={css.content}>
-        <p>© {new Date().getFullYear()} NoteHub. All rights reserved.</p>
-        <div className={css.wrap}>
-          <p>Developer: your name</p>
-          <p>
-            Contact us:
-            <a href="mailto:student@notehub.app">student@notehub.app</a>
-          </p>
-        </div>
+        <p>© {new Date().getFullYear()} NoteSpace</p>
+        <p>
+          <a href="mailto:oleksandr.v.bilokur@gmail.com">Contact</a>
+        </p>
       </div>
     </footer>
   );
