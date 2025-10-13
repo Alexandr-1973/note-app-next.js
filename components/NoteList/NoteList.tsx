@@ -3,12 +3,16 @@ import type { NoteResponse } from "../../types/note";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteNote } from "@/lib/api/clientApi";
+import { CiEdit } from "react-icons/ci";
+
+import { useRouter } from "next/navigation";
 
 interface NotesProps {
   notes: NoteResponse[];
 }
 
 export default function NoteList({ notes }: NotesProps) {
+  const router=useRouter();
   const queryClient = useQueryClient();
 
   const deleteNoteMutation = useMutation({
@@ -27,6 +31,7 @@ export default function NoteList({ notes }: NotesProps) {
             <li className={css.listItem} key={note.id}>
               <h2 className={css.title}>{note.title}</h2>
               <p className={css.content}>{note.content}</p>
+              <CiEdit className={css.editIcon} onClick={()=>router.push(`/notes/${note.id}/edit`)}/>
               <div className={css.footer}>
                 <span className={css.tag}>{note.tag}</span>
                 <Link
