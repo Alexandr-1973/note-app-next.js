@@ -1,5 +1,5 @@
 export interface NoteTag {
-  tag: "All" | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+  tag: string;
 }
 
 export interface Note extends NoteTag {

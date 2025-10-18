@@ -6,13 +6,15 @@ import { deleteNote } from "@/lib/api/clientApi";
 import { CiEdit } from "react-icons/ci";
 
 import { useRouter } from "next/navigation";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
 interface NotesProps {
   notes: NoteResponse[];
 }
 
 export default function NoteList({ notes }: NotesProps) {
-  const router=useRouter();
+  const { setDraft } = useNoteDraftStore();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const deleteNoteMutation = useMutation({
@@ -22,16 +24,26 @@ export default function NoteList({ notes }: NotesProps) {
     },
   });
 
+  const handleClick = (note: NoteResponse) => {
+    setDraft(note);
+    router.push(`/notes/${note.id}/edit`);
+  };
+
   return (
     <>
       {notes.length === 0 && <span>Not found</span>}
       {notes.length > 0 && (
         <ul className={css.list}>
-          {notes.map((note) => (
-            <li className={css.listItem} key={note.id}>
+          {notes.map((note, index) => (
+            <li className={css.listItem} key={index}>
               <h2 className={css.title}>{note.title}</h2>
               <p className={css.content}>{note.content}</p>
-              <CiEdit className={css.editIcon} onClick={()=>router.push(`/notes/${note.id}/edit`)}/>
+              <CiEdit
+                className={css.editIcon}
+                onClick={() => {
+                  handleClick(note);
+                }}
+              />
               <div className={css.footer}>
                 <span className={css.tag}>{note.tag}</span>
                 <Link

@@ -1,48 +1,59 @@
 "use client";
 
 import css from "./NotePreview.module.css";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api/clientApi";
-import { useState } from "react";
+import { fetchNoteById, NoteByIdResponse } from "@/lib/api/clientApi";
+import { useEffect } from "react";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
 export default function NotePreviewClient() {
+  const pathname = usePathname();
+  const { setDraft, clearDraft } = useNoteDraftStore();
 
-  const [isOpen, setIsOpen]=useState(true)
   const router = useRouter();
 
   const { id } = useParams<{ id: string }>();
-
-
 
   const {
     data: note,
     isLoading,
     error,
-  } = useQuery({
+    isSuccess,
+  } = useQuery<NoteByIdResponse>({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
 
+  useEffect(() => {
+    if (isSuccess && note) {
+      setDraft(note);
+    }
+  }, [isSuccess, note, setDraft]);
+
   if (isLoading) return <p>Loading, please wait...</p>;
 
   if (error || !note) return <p>Something went wrong.</p>;
 
-  const close = () => router.back();
+  const showModal = pathname === `/notes/${id}`;
+
+  const close = () => {
+    clearDraft();
+    router.back();
+  };
 
   const handleClick = () => {
-    setIsOpen(false);
     router.replace(`/notes/${id}/edit`);
   };
 
-   return (
+  return (
     <>
-      {isOpen && (
+      {showModal && (
         <Modal close={close}>
           <div className={css.container}>
-            <button className={css.editButton} onClick={()=>handleClick()}>
+            <button className={css.editButton} onClick={() => handleClick()}>
               Edit
             </button>
             <div className={css.item}>

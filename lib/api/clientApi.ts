@@ -1,7 +1,6 @@
 import type { Note, NoteResponse } from "@/types/note";
 import { nextServer } from "./api";
 import { User } from "@/types/user";
-import { log } from "util";
 
 export interface GetResponse {
   notes: NoteResponse[];
@@ -52,6 +51,11 @@ export async function createNote(note: Note) {
   return response.data;
 }
 
+export async function patchNote(id: string, note: Note) {
+  const response = await nextServer.patch<NoteResponse>(`notes/${id}`, note);
+  return response.data;
+}
+
 export async function deleteNote(id: string) {
   const response = await nextServer.delete<deleteResponse>(`notes/${id}`);
   return response;
@@ -61,7 +65,7 @@ export async function fetchNoteById(id: string) {
   const response = await nextServer.get<NoteByIdResponse>(`notes/${id}`);
 
   console.log(response.data);
-  
+
   return response.data;
 }
 
@@ -128,4 +132,3 @@ export const patchUser = async (formData: FormData) => {
   });
   return res.data;
 };
-

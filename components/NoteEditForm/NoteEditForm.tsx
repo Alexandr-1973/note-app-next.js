@@ -1,16 +1,24 @@
 "use client";
 
-import css from "./NoteForm.module.css";
-import type { Note } from "../../types/note";
+import css from "./NoteEditForm.module.css";
+import type { Note, NoteResponse } from "../../types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useNoteDraftStore } from "@/lib/store/noteStore";
-import { createNote, GetResponse } from "@/lib/api/clientApi";
+import { GetResponse, patchNote } from "@/lib/api/clientApi";
+import { useEffect } from "react";
 
-export default function NoteForm() {
+export default function NoteEditForm() {
+  const { id } = useParams<{ id: string }>();
   const { draft, setDraft, clearDraft } = useNoteDraftStore();
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      clearDraft();
+    };
+  }, [clearDraft]);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -23,23 +31,40 @@ export default function NoteForm() {
     });
   };
 
-  const addNoteMutation = useMutation({
-    mutationFn: (note: Note) => createNote(note),
-    onSuccess: (note: Note) => {
+  const patchNoteMutation = useMutation({
+    mutationFn: (note: Note) => patchNote(id, note),
+    onSuccess: (updated: NoteResponse) => {
       clearDraft();
       queryClient.invalidateQueries({ queryKey: ["notes"] });
-      queryClient.setQueryData(["notes", "", 1, "All"], (old: GetResponse) => ({
-        ...old,
-        notes: old?.notes ? [note, ...old.notes] : [note],
-      }));
+      queryClient.setQueryData(["notes", "", 1, "All"], (old: GetResponse) => {
+        if (!old) return old;
+        const existing = old.notes ?? [];
+        const updatedNotes = existing.some(
+          (n) => String(n.id) === String(updated.id)
+        )
+          ? existing.map((n) =>
+              String(n.id) === String(updated.id) ? updated : n
+            )
+          : [updated, ...existing];
+
+        return {
+          ...old,
+          notes: updatedNotes,
+        };
+      });
       router.push(`/notes/filter/All`);
     },
   });
 
   const handleSubmit = (formData: FormData) => {
     const values = Object.fromEntries(formData) as unknown as Note;
-    addNoteMutation.mutate(values);
+    patchNoteMutation.mutate(values);
   };
+
+  // const handleCancel = () => {
+  //   // clearDraft();
+  //   router.push(`/notes/filter/All`);
+  // };
 
   return (
     <form className={css.form} action={handleSubmit}>
@@ -88,12 +113,12 @@ export default function NoteForm() {
         <button
           type="button"
           className={css.cancelButton}
-          onClick={() => router.push(`/notes/filter/All`)}
+          onClick={() => router.replace(`/notes/filter/All`)}
         >
           Cancel
         </button>
         <button type="submit" className={css.submitButton} disabled={false}>
-          Create note
+          Save
         </button>
       </div>
     </form>
