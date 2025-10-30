@@ -1,9 +1,3 @@
-.userEmail {
-  color: white;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
-}
-
 .logoutButton {
   background: transparent;
   border: 1px solid white;
@@ -23,6 +17,7 @@
 .navigationItem {
   display: flex;
   align-items: center;
+  gap: 18px;
 }
 
 .navigationLink {
