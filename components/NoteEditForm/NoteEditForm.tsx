@@ -61,11 +61,6 @@ export default function NoteEditForm() {
     patchNoteMutation.mutate(values);
   };
 
-  // const handleCancel = () => {
-  //   // clearDraft();
-  //   router.push(`/notes/filter/All`);
-  // };
-
   return (
     <form className={css.form} action={handleSubmit}>
       <div className={css.formGroup}>

@@ -2,6 +2,7 @@
 
 import { checkSession, getMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
+
 import { useEffect, useState } from "react";
 
 type Props = {

@@ -30,13 +30,9 @@ export default function ProfileEdit() {
   };
 
   const handleSubmit = async (formData: FormData) => {
-    // const formValues = Object.fromEntries(formData);
-
     if (user) {
       formData.append("email", user.email);
       const res = await patchUser(formData);
-      // formValues.email = user.email;
-      // const res = await patchUser(formValues as PatchRequest);
 
       if (res) {
         setUser(res);

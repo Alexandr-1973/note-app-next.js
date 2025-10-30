@@ -28,6 +28,7 @@ export default function Header() {
               ]}
             />
           </li>
+
           <AuthNavigation />
         </ul>
       </nav>

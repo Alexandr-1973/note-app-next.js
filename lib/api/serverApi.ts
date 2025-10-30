@@ -3,7 +3,6 @@ import { nextServer } from "./api";
 import { cookies } from "next/headers";
 import { User } from "@/types/user";
 
-
 export interface GetResponse {
   notes: NoteResponse[];
   totalPages: number;
@@ -61,15 +60,6 @@ export async function fetchNotes(
   return response.data;
 }
 
-// export async function createNote(note: Note) {
-//   const response = await nextServer.post<NoteResponse>(
-//     "notes",
-//     note,
-//     await getAuth()
-//   );
-//   return response.data;
-// }
-
 export async function deleteNote(id: string) {
   const response = await nextServer.delete<deleteResponse>(
     `notes/${id}`,
@@ -84,8 +74,6 @@ export async function fetchNoteById(id: string) {
     await getAuth()
   );
 
-  console.log(response.data.created_at);
-  
   return response.data;
 }
 

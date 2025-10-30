@@ -64,8 +64,6 @@ export async function deleteNote(id: string) {
 export async function fetchNoteById(id: string) {
   const response = await nextServer.get<NoteByIdResponse>(`notes/${id}`);
 
-  console.log(response.data);
-
   return response.data;
 }
 
@@ -107,22 +105,11 @@ export const logout = async (): Promise<void> => {
   await nextServer.post("/auth/logout");
 };
 
-// export type PatchRequest = {
-//   email: string;
-//   userName?: string;
-//   avatar_file?: File;
-// };
-
 export type UserPatch = {
   email: string;
   username: string;
   avatar: string;
 };
-
-// export const patchUser = async (data: PatchRequest) => {
-//   const res = await nextServer.patch<UserPatch>("/users/me", data);
-//   return res.data;
-// };
 
 export const patchUser = async (formData: FormData) => {
   const res = await nextServer.patch<UserPatch>("/users/me", formData, {

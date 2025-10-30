@@ -16,9 +16,10 @@ export async function GET() {
     }
 
     if (refreshToken) {
-      const apiRes = await api.get("auth/refresh_token", {
+      const apiRes = await api.post("auth/refresh_token", null, {
         headers: {
           Cookie: cookieStore.toString(),
+          "Content-Type": "application/json",
         },
       });
 
