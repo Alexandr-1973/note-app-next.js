@@ -27,11 +27,19 @@ export default function NoteForm() {
     mutationFn: (note: Note) => createNote(note),
     onSuccess: (note: Note) => {
       clearDraft();
+      queryClient.setQueryData(["notes", "", 1, "All"], (old?: GetResponse) => {
+        if (!old) return old;
+        const updatedNotes = [note, ...old.notes];
+        const totalItems = updatedNotes.length;
+        const newTotalPages = Math.ceil(totalItems / 12);
+        return {
+          ...old,
+          notes: updatedNotes.slice(0, 12),
+          totalPages: newTotalPages,
+        };
+      });
+
       queryClient.invalidateQueries({ queryKey: ["notes"] });
-      queryClient.setQueryData(["notes", "", 1, "All"], (old: GetResponse) => ({
-        ...old,
-        notes: old?.notes ? [note, ...old.notes] : [note],
-      }));
       router.push(`/notes/filter/All`);
     },
   });
