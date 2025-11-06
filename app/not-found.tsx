@@ -3,21 +3,21 @@ import css from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found",
-  description: "This page does not exist in Note App.",
+  description: "This page does not exist in NoteSpace.",
   openGraph: {
     title: "404 - Page Not Found",
-    description: "This page does not exist in Note App.",
+    description: "This page does not exist in NoteSpace.",
     url: "test-next-js-silk-two.vercel.app/not-found",
     images: [
       {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        url: "https://res.cloudinary.com/dvojqixys/image/upload/v1762469426/imageNoteSpace_w8ycvc.png",
         width: 1200,
         height: 630,
-        alt: "Note App 404 Preview",
+        alt: "NoteSpace 404 Preview",
       },
     ],
     type: "website",
-    siteName: "Note App",
+    siteName: "NoteSpace",
   },
   alternates: {
     canonical: "test-next-js-silk-two.vercel.app/not-found",

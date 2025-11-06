@@ -1,5 +1,6 @@
 import { fetchNoteById } from "@/lib/api/serverApi";
 import NoteDetailsClient from "./NoteDetails.client";
+import { baseURL } from "@/lib/api/api";
 import {
   QueryClient,
   HydrationBoundary,
@@ -19,11 +20,11 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: `Note: ${note.title}`,
       description: note.content.slice(0, 100),
-      url: `https://notehub.com/notes/${id}`,
-      siteName: "NoteHub",
+      url: `${baseURL}/notes/${id}`,
+      siteName: "NoteSpace",
       images: [
         {
-          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          url: "https://res.cloudinary.com/dvojqixys/image/upload/v1762469426/imageNoteSpace_w8ycvc.png",
           width: 1200,
           height: 630,
           alt: note.title,

@@ -6,33 +6,34 @@ export default function Home() {
       <div className={css.container}>
         <h1 className={css.title}>Welcome to NoteSpace</h1>
         <p className={css.description}>
-          NoteSpace is a modern web application designed to help you capture,
-          organize, and manage your notes with ease. Whether you’re working on a
-          project, preparing study materials, or simply writing down your daily
-          thoughts, NoteHub provides a reliable space to keep everything
-          structured and easy to find.
+          NoteSpace is a modern web app for capturing and organizing your notes
+          with ease. Whether it’s work projects, study materials, or daily
+          thoughts, NoteSpace keeps everything clear and accessible in one
+          place. The interface is simple and distraction-free, helping you focus
+          on what matters — your ideas. Add tags and keywords to quickly find
+          any note, even among hundreds. Built-in search and smooth navigation
+          make it effortless to manage both quick reminders and long-form texts.
+          NoteSpace evolves constantly, improving performance and usability.
+          It’s a focused, dependable space for people who value clarity and
+          productivity.
         </p>
-        <p className={css.description}>
-          The application combines simplicity with flexibility. You can create,
-          edit, and browse your notes through a clear and distraction-free
-          interface that focuses on what really matters — your ideas. Each note
-          can include keywords and tags, allowing you to quickly locate
-          important information even among hundreds of entries.
-        </p>
-        <p className={css.description}>
-          With built-in search and smooth navigation, NoteSpace makes it
-          effortless to manage both short reminders and long-form content.
-          Whether you’re using it on your laptop at home or checking your notes
-          from a mobile device, your workspace stays consistent and accessible
-          at any moment.
-        </p>
-        <p className={css.description}>
-          Our goal is to offer a tool that feels intuitive and dependable.
-          NoteSpace is constantly improving, bringing small but meaningful
-          updates focused on usability and performance. It’s the perfect
-          solution for anyone who values clarity, focus, and productivity in
-          their daily work.
-        </p>
+
+        <div className={css.videoContainer}>
+          <h2 className={css.videoTitle}>Watch how it works 🎥</h2>
+          <video
+            className={css.video}
+            controls
+            preload="none"
+            playsInline
+            poster="https://res.cloudinary.com/dvojqixys/image/upload/vYOUR_POSTER_ID.jpg"
+          >
+            <source
+              src="https://res.cloudinary.com/dvojqixys/video/upload/v1762468537/Demo_rtnm8p.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </main>
   );

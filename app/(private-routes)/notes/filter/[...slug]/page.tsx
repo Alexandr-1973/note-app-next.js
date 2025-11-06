@@ -22,14 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `test-next-js-silk-two.vercel.app/notes/filter/${slug.join("/")}`,
       images: [
         {
-          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          url: "https://res.cloudinary.com/dvojqixys/image/upload/v1762469426/imageNoteSpace_w8ycvc.png",
           width: 1200,
           height: 630,
           alt: `Notes filtered by ${category}`,
         },
       ],
       type: "website",
-      siteName: "Note App",
+      siteName: "NoteSpace",
     },
   };
 }

@@ -13,13 +13,34 @@
   font-size: 36px;
   font-weight: 700;
   color: #1a1a1a;
-  margin-bottom: 60px;
+  margin-bottom: 16px;
   text-align: center;
 }
 
 .description {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
   font-size: 18px;
   color: #444444;
   line-height: 28px;
+  /* margin-bottom: 8px; */
+}
+
+.videoContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.videoTitle {
+  font-size: 1.4rem;
   margin-bottom: 16px;
+}
+
+.video {
+  width: 100%;
+  max-width: 640px;
+  height: 360px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  /* border: none; */
 }

@@ -14,22 +14,22 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Note App",
+  title: "NoteSpace",
   description: "Notes application",
   openGraph: {
-    title: "Note App",
+    title: "NoteSpace",
     description: "Notes application",
     url: "test-next-js-silk-two.vercel.app/",
     images: [
       {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        url: "https://res.cloudinary.com/dvojqixys/image/upload/v1762469426/imageNoteSpace_w8ycvc.png",
         width: 1200,
         height: 630,
-        alt: "Note App Preview",
+        alt: "NoteSpace",
       },
     ],
     type: "website",
-    siteName: "Note App",
+    siteName: "NoteSpace",
   },
 };
 
